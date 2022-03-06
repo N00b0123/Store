@@ -16,7 +16,7 @@ public class Raycast : MonoBehaviour
 
     void Awake()
     {
-        UI = GameObject.Find("image");
+        UI = GameObject.Find("toolTip");
         UI.SetActive(false);
 
         if (mainCamera == null)
@@ -36,8 +36,11 @@ public class Raycast : MonoBehaviour
         RaycastHit();
     }
 
+    //analisar para substituir raycast por raycastAll
+    //analisar substituir verficaçao de qual objeto esta ativo com eventos
     void RaycastHit()
     {
+        
         if (Physics.Raycast(mainCamera.transform.position, mainCamera.transform.forward, out hit, raycastRange))
         {
             if (!hit.collider.gameObject.CompareTag("Player"))
