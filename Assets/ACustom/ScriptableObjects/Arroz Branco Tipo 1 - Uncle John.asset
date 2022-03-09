@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b43750c4c7c4024c95403b56a5a5739, type: 3}
+  m_Name: Arroz Branco Tipo 1 - Uncle John
+  m_EditorClassIdentifier: 
+  productName: Arroz Branco Tipo 1
+  brand: Uncle John
+  value: 15
+  weigth: 1 KG
+  manufactureDate: 30/02/2021
+  expirationDate: 30/03/2023
+  ingredients: Arroz
+  allergies: Nenhum
+  stock: 30
+  model3D: {fileID: 0}
+  renderTexture: {fileID: 8400000, guid: 854bbf66c11fb2644b7b2d2c583cd9d3, type: 2}

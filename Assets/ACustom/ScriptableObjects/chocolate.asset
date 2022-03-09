@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b43750c4c7c4024c95403b56a5a5739, type: 3}
+  m_Name: chocolate
+  m_EditorClassIdentifier: 
+  productName: Barra de chocolate
+  brand: Choco
+  value: 4
+  weigth: 200 G
+  manufactureDate: 23/02/2021
+  expirationDate: 25/04/2022
+  ingredients: cacau, acucar, conservante
+  allergies: cacau
+  stock: 20
+  model3D: {fileID: 0}
+  renderTexture: {fileID: 8400000, guid: 7d5c65fa7005d28408a1eac21eb4a377, type: 2}

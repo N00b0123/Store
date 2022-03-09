@@ -6,27 +6,36 @@ using UnityEngine.UI;
 
 public class ToolTip : MonoBehaviour
 {
-    private TextMeshProUGUI nameText;
-    private TextMeshProUGUI brandText;
-    private TextMeshProUGUI valueText;
-    private TextMeshProUGUI weigthText;
-    private TextMeshProUGUI expirationText;
-    private RawImage renderTexture;
+    private static ToolTip instance;
+    [SerializeField] private ProductSO productSO;
 
-
-    void Start()
+    private void Start()
     {
-        nameText = transform.Find("nameText").GetComponent<TextMeshProUGUI>();
-        brandText = transform.Find("brandText").GetComponent<TextMeshProUGUI>();
-        valueText = transform.Find("valueText").GetComponent<TextMeshProUGUI>();
-        weigthText = transform.Find("weigthText").GetComponent<TextMeshProUGUI>();
-        expirationText = transform.Find("expirationText").GetComponent<TextMeshProUGUI>();
-        renderTexture = transform.Find("RawImage").GetComponent<RawImage>();
+        instance = this;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         
+    }
+
+    private void ShowToolTip()
+    {
+        gameObject.SetActive(true);
+    }
+
+    private void HideToolTip()
+    {
+        gameObject.SetActive(false);
+    }
+
+    public static void ShowToolTip_Static()
+    {
+        instance.ShowToolTip();
+    }
+
+    public static void HideToolTip_Static()
+    {
+        instance.HideToolTip();
     }
 }
