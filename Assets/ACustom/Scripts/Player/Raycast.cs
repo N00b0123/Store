@@ -18,9 +18,17 @@ public class Raycast : MonoBehaviour
     private Transform lastHitObj;
 
     private SOLink productLink;
+    private PDPLink pdpLink;
     private ProductSO productSO;
+    private ProductSO productSOPDP;
 
     public event EventHandler<OnObjectChangeRayArgs> OnObjectChangeRay;
+    public event EventHandler<OnObjectChangeRayPDPArgs> OnObjectChangeRayPDP;
+
+        public class OnObjectChangeRayPDPArgs : EventArgs
+    {
+        public ProductSO productSO;
+    }
 
     public class OnObjectChangeRayArgs : EventArgs
     {
@@ -64,11 +72,15 @@ public class Raycast : MonoBehaviour
                     productLink = hit.collider.GetComponent<SOLink>();
                     productSO = productLink.GetSO();
 
+                    pdpLink = hit.collider.GetComponent<PDPLink>();
+                    productSOPDP = pdpLink.GetSO();
+
                     mat.SetFloat("_outlineThickness", 0.89f);
                     ToolTip.Instance.ShowToolTipUI();
-                    ToolTip.Instance.ShowToolTipPDP();
+                   // ToolTip.Instance.ShowToolTipPDP();
 
                     OnObjectChangeRay?.Invoke(this, new OnObjectChangeRayArgs { productSO = productSO });
+                    OnObjectChangeRayPDP?.Invoke(this, new OnObjectChangeRayPDPArgs { productSO = productSOPDP });
                 }
                 lastHitObj = hit.collider.transform;
             }
@@ -78,7 +90,7 @@ public class Raycast : MonoBehaviour
             mat = lastHitObj.transform.GetComponent<Renderer>().sharedMaterial;
             mat.SetFloat("_outlineThickness", 0f);
             ToolTip.Instance.HideToolTipUI();
-            ToolTip.Instance.HideToolTipPDP();
+          //  ToolTip.Instance.HideToolTipPDP();
         }
     }
 

@@ -35,11 +35,15 @@ public class ToolTip : MonoBehaviour
     public void ShowToolTipPDP()
     {
         UIDetails.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
+        Time.timeScale = 0f;
     }
 
     public void HideToolTipPDP()
     {
         UIDetails.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+        Time.timeScale = 1f;
     }
 
 }
