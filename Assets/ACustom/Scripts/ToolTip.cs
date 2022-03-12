@@ -6,36 +6,40 @@ using UnityEngine.UI;
 
 public class ToolTip : MonoBehaviour
 {
-    private static ToolTip instance;
-    [SerializeField] private ProductSO productSO;
+    public static ToolTip Instance;
+
+    private GameObject UI;
+    private GameObject UIDetails;
 
     private void Start()
     {
-        instance = this;
+        Instance = this;
+
+        UI = GameObject.Find("toolTip");
+        UIDetails = GameObject.Find("details");
+        UI.SetActive(false);
+        UIDetails.SetActive(false);
     }
 
-    private void Update()
+    public void ShowToolTipUI()
     {
-        
+        UI.SetActive(true);
     }
 
-    private void ShowToolTip()
+    public void HideToolTipUI()
     {
-        gameObject.SetActive(true);
+        UI.SetActive(false);
     }
 
-    private void HideToolTip()
+
+    public void ShowToolTipPDP()
     {
-        gameObject.SetActive(false);
+        UIDetails.SetActive(true);
     }
 
-    public static void ShowToolTip_Static()
+    public void HideToolTipPDP()
     {
-        instance.ShowToolTip();
+        UIDetails.SetActive(false);
     }
 
-    public static void HideToolTip_Static()
-    {
-        instance.HideToolTip();
-    }
 }

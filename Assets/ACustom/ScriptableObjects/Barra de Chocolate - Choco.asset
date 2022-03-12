@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b43750c4c7c4024c95403b56a5a5739, type: 3}
-  m_Name: Chimia de Figo - Uncle john
+  m_Name: Barra de Chocolate - Choco
   m_EditorClassIdentifier: 
-  productName: "Chimia de F\xEDgo"
-  brand: Uncle John
-  value: 35,75
-  weigth: 500 G
-  manufactureDate: 01/01/2021
-  expirationDate: 20/10/2023
-  ingredients: "F\xEDgo, A\xE7ucar, \xC1gua"
-  allergies: Pode conter Figo
-  stock: 50
+  productName: Barra de chocolate
+  brand: Choco
+  value: 4,99
+  weigth: 200 G
+  manufactureDate: 23/02/2021
+  expirationDate: 25/04/2022
+  ingredients: cacau, acucar, conservante
+  allergies: cacau
+  stock: 20
   model3D: {fileID: 0}
-  renderTexture: {fileID: 8400000, guid: 60c1697b5d8ae0144821c0910fafcb69, type: 2}
+  renderTexture: {fileID: 8400000, guid: 7d5c65fa7005d28408a1eac21eb4a377, type: 2}

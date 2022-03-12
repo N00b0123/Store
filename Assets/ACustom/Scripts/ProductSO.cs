@@ -7,7 +7,7 @@ public class ProductSO : ScriptableObject
 {
     public string productName;
     public string brand;
-    public float value;
+    public string value;
     public string weigth;
     public string manufactureDate;
     public string expirationDate;

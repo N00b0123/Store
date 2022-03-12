@@ -41,7 +41,7 @@ public class SOLink : MonoBehaviour
     {
         nameText.text = e.productSO.productName;
         brandText.text = e.productSO.brand;
-        valueText.text = e.productSO.value.ToString();
+        valueText.text = e.productSO.value;
         weigthText.text = e.productSO.weigth;
         expirationText.text = e.productSO.expirationDate;
         renderTexture.texture = e.productSO.renderTexture;

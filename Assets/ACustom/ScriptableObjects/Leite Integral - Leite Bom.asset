@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b43750c4c7c4024c95403b56a5a5739, type: 3}
-  m_Name: chocolate
+  m_Name: Leite Integral - Leite Bom
   m_EditorClassIdentifier: 
-  productName: Barra de chocolate
-  brand: Choco
-  value: 4
-  weigth: 200 G
-  manufactureDate: 23/02/2021
-  expirationDate: 25/04/2022
-  ingredients: cacau, acucar, conservante
-  allergies: cacau
-  stock: 20
+  productName: Leite Integral
+  brand: Leite Bom
+  value: 4,99
+  weigth: 1 L
+  manufactureDate: 22/02/2022
+  expirationDate: 22/03/2022
+  ingredients: Leite
+  allergies: Leite
+  stock: 50
   model3D: {fileID: 0}
-  renderTexture: {fileID: 8400000, guid: 7d5c65fa7005d28408a1eac21eb4a377, type: 2}
+  renderTexture: {fileID: 8400000, guid: e1cbbaaa54113614f88f092cad098cbc, type: 2}

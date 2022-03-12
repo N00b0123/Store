@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   productName: Salame
   brand: Plebeu
-  value: 52
+  value: 49,99
   weigth: 1 KG
   manufactureDate: 30/02/2021
   expirationDate: 30/12/2022

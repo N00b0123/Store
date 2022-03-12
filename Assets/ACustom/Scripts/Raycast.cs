@@ -13,8 +13,6 @@ public class Raycast : MonoBehaviour
     [SerializeField] private float raycastRange = 5f;
     private GameObject player;
 
-    private GameObject UI;
-
     private Material mat;
     private RaycastHit hit;
     private Transform lastHitObj;
@@ -32,10 +30,6 @@ public class Raycast : MonoBehaviour
     void Awake()
     {
         Instance = this;
-
-        UI = GameObject.Find("toolTip");
-        UI.SetActive(false);
-
 
         if (mainCamera == null)
         {
@@ -71,8 +65,9 @@ public class Raycast : MonoBehaviour
                     productSO = productLink.GetSO();
 
                     mat.SetFloat("_outlineThickness", 0.89f);
-                    UI.SetActive(true);
-                    //   ToolTip.ShowToolTip_Static();
+                    ToolTip.Instance.ShowToolTipUI();
+                    ToolTip.Instance.ShowToolTipPDP();
+
                     OnObjectChangeRay?.Invoke(this, new OnObjectChangeRayArgs { productSO = productSO });
                 }
                 lastHitObj = hit.collider.transform;
@@ -82,8 +77,8 @@ public class Raycast : MonoBehaviour
         {
             mat = lastHitObj.transform.GetComponent<Renderer>().sharedMaterial;
             mat.SetFloat("_outlineThickness", 0f);
-            UI.SetActive(false);
-            //   ToolTip.HideToolTip_Static();
+            ToolTip.Instance.HideToolTipUI();
+            ToolTip.Instance.HideToolTipPDP();
         }
     }
 

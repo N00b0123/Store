@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   productName: Arroz Branco Tipo 1
   brand: Uncle John
-  value: 15
+  value: 15,49
   weigth: 1 KG
   manufactureDate: 30/02/2021
   expirationDate: 30/03/2023
