@@ -16,13 +16,7 @@ public class GameController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             ToolTip.Instance.HideToolTipUI();
-            ToolTip.Instance.ShowToolTipPDP();
-        }
-
-        if (Input.GetKeyDown(KeyCode.X) || (Input.GetKeyDown(KeyCode.Escape)))
-        {
-            ToolTip.Instance.ShowToolTipUI();
-            ToolTip.Instance.HideToolTipPDP();
+            PDPController.Instance.ShowPDP();
         }
     }
 }

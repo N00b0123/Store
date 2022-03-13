@@ -16,6 +16,8 @@ public class Raycast : MonoBehaviour
     private Material mat;
     private RaycastHit hit;
     private Transform lastHitObj;
+    private Transform nowHitObj;
+    private bool rayBool;
 
     private SOLink productLink;
     private PDPLink pdpLink;
@@ -25,7 +27,22 @@ public class Raycast : MonoBehaviour
     public event EventHandler<OnObjectChangeRayArgs> OnObjectChangeRay;
     public event EventHandler<OnObjectChangeRayPDPArgs> OnObjectChangeRayPDP;
 
-        public class OnObjectChangeRayPDPArgs : EventArgs
+    public event EventHandler<OnObjectSelectedArgs> OnObjectSelected;
+    public event EventHandler<OnObjectUnSelectedArgs> OnObjectUnSelected;
+
+
+    //tavez seja codigo inutil duplicado, mas para deixar sem confusao cada evento com seu argumento
+    public class OnObjectUnSelectedArgs : EventArgs
+    {
+        public Transform lastHitObj;
+    }
+
+    public class OnObjectSelectedArgs : EventArgs
+    {
+        public Transform nowHitObj;
+    }
+
+    public class OnObjectChangeRayPDPArgs : EventArgs
     {
         public ProductSO productSO;
     }
@@ -57,40 +74,44 @@ public class Raycast : MonoBehaviour
     }
 
     //analisar para substituir raycast por raycastAll
-    //analisar substituir verficaçao de qual objeto esta ativo com eventos
     void RaycastHit()
     {
 
         if (Physics.Raycast(mainCamera.transform.position, mainCamera.transform.forward, out hit, raycastRange))
         {
-
+            rayBool = true;
             if (!hit.collider.gameObject.CompareTag("Player"))
             {
-                mat = hit.transform.GetComponent<Renderer>().material;
+             
                 if (lastHitObj != null)
                 {
+                    nowHitObj = hit.collider.transform;
                     productLink = hit.collider.GetComponent<SOLink>();
                     productSO = productLink.GetSO();
 
                     pdpLink = hit.collider.GetComponent<PDPLink>();
                     productSOPDP = pdpLink.GetSO();
 
-                    mat.SetFloat("_outlineThickness", 0.89f);
                     ToolTip.Instance.ShowToolTipUI();
-                   // ToolTip.Instance.ShowToolTipPDP();
 
                     OnObjectChangeRay?.Invoke(this, new OnObjectChangeRayArgs { productSO = productSO });
                     OnObjectChangeRayPDP?.Invoke(this, new OnObjectChangeRayPDPArgs { productSO = productSOPDP });
+                    OnObjectSelected?.Invoke(this, new OnObjectSelectedArgs { nowHitObj = nowHitObj });
+
+                    if(nowHitObj != lastHitObj)
+                    {
+                        OnObjectUnSelected?.Invoke(this, new OnObjectUnSelectedArgs { lastHitObj = lastHitObj });
+                    }
+
                 }
-                lastHitObj = hit.collider.transform;
+               lastHitObj = hit.collider.transform;
             }
         }
-        else if (lastHitObj)
+        else if(rayBool)
         {
-            mat = lastHitObj.transform.GetComponent<Renderer>().sharedMaterial;
-            mat.SetFloat("_outlineThickness", 0f);
+            OnObjectUnSelected?.Invoke(this, new OnObjectUnSelectedArgs { lastHitObj = lastHitObj });
             ToolTip.Instance.HideToolTipUI();
-          //  ToolTip.Instance.HideToolTipPDP();
+            rayBool = false;
         }
     }
 
