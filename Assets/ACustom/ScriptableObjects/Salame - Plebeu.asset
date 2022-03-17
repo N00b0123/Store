@@ -18,8 +18,14 @@ MonoBehaviour:
   weigth: 1 KG
   manufactureDate: 05/02/2021
   expirationDate: 30/12/2022
-  ingredients: Carne de porco, conservantes
-  allergies: conservantes
+  ingredients: "Carne su\xEDna, toucinho su\xEDno, sal, dextrose, especiarias: pimenta-preta,
+    pimenta-vermelha, alecrim e curry, maltodextrina, \xE1gua, a\xE7\xFAcar, real\xE7ador
+    de sabor: glutamato monoss\xF3dico (INS 621), antioxidante: eritorbato de s\xF3dio
+    (INS 316), conservantes: nitrato de s\xF3dio (INS 251) e nitrito de s\xF3dio
+    (INS 250), cultura bacteriana, aromas naturais: pimenta-vermelha e alho e acidulante:
+    \xE1cido c\xEDtrico (INS 330)."
+  allergies: "N\xE3o cont\xE9m gl\xFAten N\xE3o cont\xE9m lactose N\xE3o Cont\xE9m
+    Alerg\xEAnicos: Cont\xE9m aromatizante."
   stock: 30
   model3D: {fileID: 0}
   renderTexture: {fileID: 8400000, guid: 758f1f6879bb2fe408d7497bd97371b3, type: 2}

@@ -19,7 +19,7 @@ MonoBehaviour:
   manufactureDate: 30/02/2021
   expirationDate: 30/03/2023
   ingredients: Arroz
-  allergies: Nenhum
+  allergies: "N\xC3O CONT\xC9M GL\xDATEN"
   stock: 30
   model3D: {fileID: 0}
   renderTexture: {fileID: 8400000, guid: 854bbf66c11fb2644b7b2d2c583cd9d3, type: 2}

@@ -18,8 +18,11 @@ MonoBehaviour:
   weigth: 200 G
   manufactureDate: 28/02/2021
   expirationDate: 25/04/2022
-  ingredients: cacau, acucar, conservante
-  allergies: cacau
+  ingredients: "cont\xE9m a\xE7\xFAcar, liquor de cacau, gordura vegetal, leite em
+    p\xF3, manteiga de cacau, emulsificante lecitina de soja e ricinoleato de glicerila
+    e aromatizante."
+  allergies: "Pode Conter Tra\xE7os De Soja, Amendoim, Castanha De Caju, Trigo E
+    Cevada. Cont\xE9m Gl\xFAten. Cont\xE9m Lactose."
   stock: 20
   model3D: {fileID: 0}
   renderTexture: {fileID: 8400000, guid: 7d5c65fa7005d28408a1eac21eb4a377, type: 2}

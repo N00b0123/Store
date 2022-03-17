@@ -10,14 +10,16 @@ public class PDPLink : MonoBehaviour
     [SerializeField] private ProductSO productSO;
 
     [SerializeField] private TextMeshProUGUI nameText;
+    [SerializeField] private TextMeshProUGUI nameTextNextPage;
     [SerializeField] private TextMeshProUGUI brandText;
     [SerializeField] private TextMeshProUGUI valueText;
     [SerializeField] private TextMeshProUGUI weigthText;
     [SerializeField] private TextMeshProUGUI manufactureText;
     [SerializeField] private TextMeshProUGUI expirationText;
-  //  [SerializeField] private TextMeshProUGUI ingredientsText;
-  //  [SerializeField] private TextMeshProUGUI allergiesText;
+    [SerializeField] private TextMeshProUGUI ingredientsText;
+    [SerializeField] private TextMeshProUGUI allergiesText;
     [SerializeField] private RawImage renderTexture;
+    [SerializeField] private RawImage nextPagerenderTexture;
 
 
     public ProductSO GetSO()
@@ -42,8 +44,12 @@ public class PDPLink : MonoBehaviour
         weigthText.text = e.productSO.weigth;
         expirationText.text = e.productSO.expirationDate;
         manufactureText.text = e.productSO.manufactureDate;
-     //   ingredientsText.text = e.productSO.ingredients;
-     //   allergiesText.text = e.productSO.allergies;
+        ingredientsText.text = e.productSO.ingredients;
+        allergiesText.text = e.productSO.allergies;
         renderTexture.texture = e.productSO.renderTexture;
+
+        //NextPage PDP
+        nameTextNextPage.text = e.productSO.productName;
+        nextPagerenderTexture.texture = e.productSO.renderTexture;
     }
 }

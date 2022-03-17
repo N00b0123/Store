@@ -18,8 +18,10 @@ MonoBehaviour:
   weigth: 1 L
   manufactureDate: 01/02/2022
   expirationDate: 22/03/2022
-  ingredients: Leite
-  allergies: Leite
+  ingredients: "Leite integral, estabilizantes: trifosfato de s\xF3dio (INS 451i),
+    citrato de s\xF3dio (INS 331iii), monofosfato monoss\xF3dico (INS 339i) e difosfato
+    diss\xF3dico (INS 450i)"
+  allergies: "N\xE3o Cont\xE9m Gl\xFAten, cont\xE9m Lactose, cont\xE9m leite."
   stock: 50
   model3D: {fileID: 0}
   renderTexture: {fileID: 8400000, guid: e1cbbaaa54113614f88f092cad098cbc, type: 2}

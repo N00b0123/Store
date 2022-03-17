@@ -18,8 +18,9 @@ MonoBehaviour:
   weigth: 500 G
   manufactureDate: 01/01/2021
   expirationDate: 20/10/2023
-  ingredients: "F\xEDgo, A\xE7ucar, \xC1gua"
-  allergies: Pode conter Figo
+  ingredients: " Figo, a\xE7\xFAcar, estabilizante pectina e regulador de acidez
+    \xE1cido c\xEDtrico."
+  allergies: " N\xC3O CONT\xC9M GL\xDATEN"
   stock: 50
   model3D: {fileID: 0}
   renderTexture: {fileID: 8400000, guid: 60c1697b5d8ae0144821c0910fafcb69, type: 2}
