@@ -90,7 +90,7 @@ public class CartController : MonoBehaviour
 
                 Transform valor = itemTemplate.transform.GetChild(4);
                 TextMeshProUGUI valorString = valor.GetComponent<TextMeshProUGUI>();
-                valorString.text = (product.value * product.quantity).ToString();
+                valorString.text = (product.value * product.quantity).ToString("F2");
 
                 Transform peso = itemTemplate.transform.GetChild(5);
                 TextMeshProUGUI pesoString = peso.GetComponent<TextMeshProUGUI>();
@@ -141,6 +141,11 @@ public class CartController : MonoBehaviour
                             var tempQuantity = product.quantity + product.quantityPlus;
                             quantityText.text = tempQuantity.ToString();
                             product.quantity = tempQuantity;
+
+                            Transform valor = uiTemplate.transform.GetChild(4);
+                            TextMeshProUGUI valorString = valor.GetComponent<TextMeshProUGUI>();
+                            valorString.text = (product.value * product.quantity).ToString("F2");
+
                         }
                     }
                 }

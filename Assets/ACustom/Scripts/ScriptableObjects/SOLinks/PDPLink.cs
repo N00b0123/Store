@@ -40,7 +40,7 @@ public class PDPLink : MonoBehaviour
     {
         nameText.text = e.productSO.productName;
         brandText.text = e.productSO.brand;
-        valueText.text = e.productSO.value.ToString();
+        valueText.text = e.productSO.value.ToString("F2");
         weigthText.text = e.productSO.weigth;
         expirationText.text = e.productSO.expirationDate;
         manufactureText.text = e.productSO.manufactureDate;
