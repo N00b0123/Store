@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b43750c4c7c4024c95403b56a5a5739, type: 3}
   m_Name: Chimia de Figo - Uncle john
   m_EditorClassIdentifier: 
+  id: 3
   productName: "Chimia de F\xEDgo"
   brand: Uncle John
-  value: 35,75
+  value: 35.5
   weigth: 500 G
   manufactureDate: 01/01/2021
   expirationDate: 20/10/2023

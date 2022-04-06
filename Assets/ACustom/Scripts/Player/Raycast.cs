@@ -13,7 +13,6 @@ public class Raycast : MonoBehaviour
     [SerializeField] private float raycastRange = 5f;
     private GameObject player;
 
-    private Material mat;
     private RaycastHit hit;
     private Transform lastHitObj;
     private Transform nowHitObj;
@@ -24,9 +23,12 @@ public class Raycast : MonoBehaviour
     private ProductSO productSO;
     private ProductSO productSOPDP;
 
+    //envia referencia do produto
     public event EventHandler<OnObjectChangeRayArgs> OnObjectChangeRay;
     public event EventHandler<OnObjectChangeRayPDPArgs> OnObjectChangeRayPDP;
 
+    //envia informacoes de qual produto esta selecionado
+    //modifica shader de selecao de produto
     public event EventHandler<OnObjectSelectedArgs> OnObjectSelected;
     public event EventHandler<OnObjectUnSelectedArgs> OnObjectUnSelected;
 

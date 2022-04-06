@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b43750c4c7c4024c95403b56a5a5739, type: 3}
   m_Name: Leite Integral - Leite Bom
   m_EditorClassIdentifier: 
+  id: 2
   productName: Leite Integral
   brand: Leite Bom
-  value: 4,99
+  value: 4.99
   weigth: 1 L
   manufactureDate: 01/02/2022
   expirationDate: 22/03/2022

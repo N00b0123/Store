@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b43750c4c7c4024c95403b56a5a5739, type: 3}
   m_Name: Salame - Plebeu
   m_EditorClassIdentifier: 
+  id: 1
   productName: Salame
   brand: Plebeu
-  value: 49,99
+  value: 49.99
   weigth: 1 KG
   manufactureDate: 05/02/2021
   expirationDate: 30/12/2022
@@ -29,3 +30,5 @@ MonoBehaviour:
   stock: 30
   model3D: {fileID: 0}
   renderTexture: {fileID: 8400000, guid: 758f1f6879bb2fe408d7497bd97371b3, type: 2}
+  quantity: 4
+  quantityPlus: 0
