@@ -14,10 +14,12 @@ public class PDPController : MonoBehaviour
     [SerializeField] TextMeshProUGUI quantityText;
     private PDPListSO pdpList;
     private bool isEnableAddToCart;
+    private bool isPDPOpen;
 
     private void Start()
     {
         isEnableAddToCart = false;
+        isPDPOpen = false;
         Raycast raycast = Raycast.Instance;
         raycast.OnObjectChangeRayPDP += Raycast_OnObjectChangeRayPDP;
 
@@ -55,12 +57,18 @@ public class PDPController : MonoBehaviour
         }
     }
 
+    public bool GetPDPStatus()
+    {
+        return isPDPOpen;
+    }
+
     public void ShowPDP()
     {
         UIDetails.SetActive(true);
         UIButtons.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
         Time.timeScale = 0f;
+        isPDPOpen = true;
     }
 
     public void HidePDP()
@@ -72,6 +80,7 @@ public class PDPController : MonoBehaviour
         UIButtons.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
         Time.timeScale = 1f;
+        isPDPOpen = false;
     }
 
     public void NextPage()

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    // Start is called before the first frame update
     void Start()
     {
         Raycast raycast = Raycast.Instance;
@@ -18,11 +17,5 @@ public class GameController : MonoBehaviour
               ToolTip.Instance.HideToolTipUI();
               PDPController.Instance.ShowPDP();
           }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }

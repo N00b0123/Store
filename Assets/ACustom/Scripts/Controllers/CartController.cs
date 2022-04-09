@@ -31,6 +31,8 @@ public class CartController : MonoBehaviour
 
     private Dictionary<int, ProductSO> productDictionary;
 
+    private bool isPDPOpen;
+
     void Start()
     {
         Instance = this;
@@ -54,14 +56,17 @@ public class CartController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
+        //mabe bad pratice, refactor in future
+        isPDPOpen = PDPController.Instance.GetPDPStatus();
+
+        if (Input.GetKeyDown(KeyCode.P) && !isPDPOpen)
         {
             cartUI.SetActive(true);
             Time.timeScale = 0f;
             Cursor.lockState = CursorLockMode.None;
         }
 
-        if (Input.GetKeyDown(KeyCode.O))
+        if (Input.GetKeyDown(KeyCode.O) && !isPDPOpen)
         {
             cartUI.SetActive(false);
             Time.timeScale = 1f;
@@ -80,25 +85,25 @@ public class CartController : MonoBehaviour
 
                 cartUIList.Add(itemTemplate);
 
-                Transform nome = itemTemplate.transform.GetChild(2);
-                TextMeshProUGUI nomeString = nome.GetComponent<TextMeshProUGUI>();
-                nomeString.text = product.productName;
+                Transform name = itemTemplate.transform.GetChild(2);
+                TextMeshProUGUI nameString = name.GetComponent<TextMeshProUGUI>();
+                nameString.text = product.productName;
 
-                Transform marca = itemTemplate.transform.GetChild(3);
-                TextMeshProUGUI marcaString = marca.GetComponent<TextMeshProUGUI>();
-                marcaString.text = product.brand;
+                Transform brand = itemTemplate.transform.GetChild(3);
+                TextMeshProUGUI brandString = brand.GetComponent<TextMeshProUGUI>();
+                brandString.text = product.brand;
 
-                Transform valor = itemTemplate.transform.GetChild(4);
-                TextMeshProUGUI valorString = valor.GetComponent<TextMeshProUGUI>();
-                valorString.text = (product.value * product.quantity).ToString("F2");
+                Transform value = itemTemplate.transform.GetChild(4);
+                TextMeshProUGUI valueString = value.GetComponent<TextMeshProUGUI>();
+                valueString.text = (product.value * product.quantity).ToString("F2");
 
-                Transform peso = itemTemplate.transform.GetChild(5);
-                TextMeshProUGUI pesoString = peso.GetComponent<TextMeshProUGUI>();
-                pesoString.text = product.weigth;
+                Transform weigth = itemTemplate.transform.GetChild(5);
+                TextMeshProUGUI weigthString = weigth.GetComponent<TextMeshProUGUI>();
+                weigthString.text = product.weigth;
 
-                Transform imagem = itemTemplate.transform.GetChild(6);
-                RawImage imagemTextura = imagem.GetComponent<RawImage>();
-                imagemTextura.texture = product.renderTexture;
+                Transform image = itemTemplate.transform.GetChild(6);
+                RawImage imageTexture = image.GetComponent<RawImage>();
+                imageTexture.texture = product.renderTexture;
 
                 Transform quantity = itemTemplate.transform.GetChild(7);
                 quantity = quantity.transform.GetChild(0);
@@ -142,9 +147,9 @@ public class CartController : MonoBehaviour
                             quantityText.text = tempQuantity.ToString();
                             product.quantity = tempQuantity;
 
-                            Transform valor = uiTemplate.transform.GetChild(4);
-                            TextMeshProUGUI valorString = valor.GetComponent<TextMeshProUGUI>();
-                            valorString.text = (product.value * product.quantity).ToString("F2");
+                            Transform value = uiTemplate.transform.GetChild(4);
+                            TextMeshProUGUI valueString = value.GetComponent<TextMeshProUGUI>();
+                            valueString.text = (product.value * product.quantity).ToString("F2");
 
                         }
                     }
@@ -152,14 +157,47 @@ public class CartController : MonoBehaviour
             }
     }
 
-    public void RemoveFromCart()
+    public void IncreaseQuantityCart()
     {
-        //just for initialize
-        var tempKey = 0;
-        var tempUIList = gameObject;
-        var tempProduct = productSO;
+        //TODO verify stock to increase
+        Transform clickedButton = EventSystem.current.currentSelectedGameObject.transform;
 
-        var nameButton = EventSystem.current.currentSelectedGameObject.transform;
+        foreach (ProductSO product in cartList.list)
+        {
+            foreach (KeyValuePair<int, ProductSO> item in productDictionary)
+            {
+                if (product.productName == item.Value.productName) 
+                {
+                    foreach (GameObject uiTemplate in cartUIList)
+                    {
+                        Transform increaseButton = uiTemplate.transform.GetChild(10);
+
+                        var tempProductName = uiTemplate.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+                        if (tempProductName.text == product.productName) 
+                        {
+                            if (clickedButton == increaseButton)
+                            {
+                                product.quantity++;
+                                Transform quantity = uiTemplate.transform.GetChild(7);
+                                quantity = quantity.transform.GetChild(0);
+                                TextMeshProUGUI quantityText = quantity.GetComponent<TextMeshProUGUI>();
+                                quantityText.text = product.quantity.ToString();
+
+                                Transform value = uiTemplate.transform.GetChild(4);
+                                TextMeshProUGUI valueString = value.GetComponent<TextMeshProUGUI>();
+                                valueString.text = (product.value * product.quantity).ToString("F2");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void DecreaseQuantityCart()
+    {
+        Transform clickedButton = EventSystem.current.currentSelectedGameObject.transform;
+
         foreach (ProductSO product in cartList.list)
         {
             foreach (KeyValuePair<int, ProductSO> item in productDictionary)
@@ -168,11 +206,55 @@ public class CartController : MonoBehaviour
                 {
                     foreach (GameObject uiTemplate in cartUIList)
                     {
-                        var removeButton = uiTemplate.transform.GetChild(9).GetComponent<Button>().transform;
-                        var tempTest = uiTemplate.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
-                        if (tempTest.text == product.productName)
+                        Transform increaseButton = uiTemplate.transform.GetChild(11);
+
+                        var tempProductName = uiTemplate.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+                        if (tempProductName.text == product.productName)
                         {
-                            if (removeButton == nameButton)
+                            if (clickedButton == increaseButton)
+                            {
+                                if(product.quantity > 1)
+                                {
+                                    product.quantity--;
+                                }
+                                Transform quantity = uiTemplate.transform.GetChild(7);
+                                quantity = quantity.transform.GetChild(0);
+                                TextMeshProUGUI quantityText = quantity.GetComponent<TextMeshProUGUI>();
+                                quantityText.text = product.quantity.ToString();
+
+                                Transform value = uiTemplate.transform.GetChild(4);
+                                TextMeshProUGUI valueString = value.GetComponent<TextMeshProUGUI>();
+                                valueString.text = (product.value * product.quantity).ToString("F2");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+    public void RemoveFromCart()
+    {
+        //just for initialize
+        var tempKey = 0;
+        var tempUIList = gameObject;
+        var tempProduct = productSO;
+
+        var clickedButton = EventSystem.current.currentSelectedGameObject.transform;
+        foreach (ProductSO product in cartList.list)
+        {
+            foreach (KeyValuePair<int, ProductSO> item in productDictionary)
+            {
+                if (product.productName == item.Value.productName) 
+                {
+                    foreach (GameObject uiTemplate in cartUIList)
+                    {
+                        var removeButton = uiTemplate.transform.GetChild(9);
+                        var tempProductName = uiTemplate.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+                        if (tempProductName.text == product.productName) 
+                        {
+                            if (removeButton == clickedButton)
                             {
                                 var itemCart = uiTemplate.transform.gameObject;
                                 if (itemCart)
