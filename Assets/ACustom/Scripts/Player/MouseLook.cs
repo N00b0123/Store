@@ -8,8 +8,8 @@ public class MouseLook : MonoBehaviour
 
     public float mouseSensitivity = 100f;
     public Transform playerBody;
-    public TextMeshProUGUI fpsString;
-    float deltaTime;
+  //  public TextMeshProUGUI fpsString;
+  //  float deltaTime;
 
 
     float xRotation = 0f;
@@ -23,9 +23,9 @@ public class MouseLook : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
-        float fps = 1.0f / deltaTime;
-        fpsString.text = Mathf.Ceil(fps).ToString();
+      //  deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
+       // float fps = 1.0f / deltaTime;
+      //  fpsString.text = Mathf.Ceil(fps).ToString();
 
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;

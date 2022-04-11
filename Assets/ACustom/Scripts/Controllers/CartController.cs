@@ -34,7 +34,13 @@ public class CartController : MonoBehaviour
     private bool isPDPOpen;
     private bool isCartOpen;
     private bool isRemoved;
+    private bool isCheckoutOpen;
     private float itemValueToRemove;
+
+    //checkout list
+    private List<GameObject> checkoutUIList = new List<GameObject>();
+    private GameObject checkoutItemTemplate;
+    private GameObject checkoutScrollUI;
 
     void Start()
     {
@@ -48,6 +54,7 @@ public class CartController : MonoBehaviour
 
         cartItemTemplate = GameObject.Find("CartItem");
         scrollUI = GameObject.Find("Panel");
+        
         cartUI.SetActive(false);
         cartItemTemplate.SetActive(false);
 
@@ -59,14 +66,20 @@ public class CartController : MonoBehaviour
 
         objIndex = 0;
         productDictionary = new Dictionary<int, ProductSO>();
+
+        //checkout list
+        checkoutItemTemplate = GameObject.Find("CheckoutItem");
+        checkoutItemTemplate.SetActive(false);
+        checkoutScrollUI = GameObject.Find("PanelCheckout");
     }
 
     private void Update()
     {
         //maybe bad pratice, refactor in future
         isPDPOpen = PDPController.Instance.GetPDPStatus();
+        isCheckoutOpen = CheckoutController.Instance.GetCheckoutStatus();
 
-        if (Input.GetKeyDown(KeyCode.P) && !isPDPOpen)
+        if (Input.GetKeyDown(KeyCode.C) && !isPDPOpen && !isCheckoutOpen)
         {
             if (!isCartOpen)
             {
@@ -92,9 +105,7 @@ public class CartController : MonoBehaviour
         {
             if (!cartList.list.Contains(product))
             {
-
                 GameObject itemTemplate = Instantiate(cartItemTemplate, scrollUI.transform);
-
                 cartUIList.Add(itemTemplate);
 
                 Transform name = itemTemplate.transform.GetChild(2);
@@ -140,6 +151,30 @@ public class CartController : MonoBehaviour
 
                 CheckoutController.Instance.UpdateValue();
 
+                //checkoutList
+
+                GameObject checkoutItem = Instantiate(checkoutItemTemplate, checkoutScrollUI.transform);
+                checkoutUIList.Add(checkoutItem);
+
+                Transform nameCheckout = checkoutItem.transform.GetChild(2);
+                TextMeshProUGUI nameStringCheckout = nameCheckout.GetComponent<TextMeshProUGUI>();
+                nameStringCheckout.text = product.productName;
+
+                Transform brandCheckout = checkoutItem.transform.GetChild(3);
+                TextMeshProUGUI brandStringCheckout = brandCheckout.GetComponent<TextMeshProUGUI>();
+                brandStringCheckout.text = product.brand;
+
+                Transform valueCheckout = checkoutItem.transform.GetChild(4);
+                TextMeshProUGUI valueStringCheckout = valueCheckout.GetComponent<TextMeshProUGUI>();
+                valueStringCheckout.text = (product.value * product.quantity).ToString("F2");
+
+                Transform quantityCheckout = checkoutItem.transform.GetChild(5);
+                quantityCheckout = quantityCheckout.transform.GetChild(0);
+                TextMeshProUGUI quantityTextCheckout = quantityCheckout.GetComponent<TextMeshProUGUI>();
+                quantityTextCheckout.text = product.quantity.ToString();
+
+                checkoutItem.SetActive(true);
+
             }
         }
     }
@@ -168,6 +203,22 @@ public class CartController : MonoBehaviour
 
                         CheckoutController.Instance.UpdateValue();
 
+                        //CheckoutList
+                        foreach (GameObject checkouItemTemplate in checkoutUIList)
+                        {
+                            var tempCheckoutProductName = checkouItemTemplate.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+                            if (tempCheckoutProductName.text == product.productName)
+                            {
+                                Transform quantityCheckout = checkouItemTemplate.transform.GetChild(5);
+                                quantityCheckout = quantityCheckout.transform.GetChild(0);
+                                TextMeshProUGUI quantityTextCheckout = quantityCheckout.GetComponent<TextMeshProUGUI>();
+                                quantityTextCheckout.text = tempQuantity.ToString();
+
+                                Transform valueCheckout = checkouItemTemplate.transform.GetChild(4);
+                                TextMeshProUGUI valueStringCheckout = valueCheckout.GetComponent<TextMeshProUGUI>();
+                                valueStringCheckout.text = (product.value * product.quantity).ToString("F2");
+                            }
+                        }
                     }
                 }
             }
@@ -178,7 +229,6 @@ public class CartController : MonoBehaviour
     {
         //TODO verify stock to increase
         Transform clickedButton = EventSystem.current.currentSelectedGameObject.transform;
-
         foreach (ProductSO product in cartList.list)
         {
             foreach (KeyValuePair<int, ProductSO> item in productDictionary)
@@ -188,9 +238,8 @@ public class CartController : MonoBehaviour
                     foreach (GameObject uiTemplate in cartUIList)
                     {
                         Transform increaseButton = uiTemplate.transform.GetChild(10);
-
                         var tempProductName = uiTemplate.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
-                        if (tempProductName.text == product.productName) 
+                        if (tempProductName.text == product.productName)
                         {
                             if (clickedButton == increaseButton)
                             {
@@ -207,8 +256,26 @@ public class CartController : MonoBehaviour
                                 valueString.text = (product.value * product.quantity).ToString("F2");
 
                                 CheckoutController.Instance.UpdateValue();
+
+                                //checkoutListing
+                                foreach (GameObject checkouItemTemplate in checkoutUIList)
+                                {
+                                    var tempCheckoutProductName = checkouItemTemplate.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+                                    if (tempCheckoutProductName.text == product.productName)
+                                    {
+                                        Transform quantityCheckout = checkouItemTemplate.transform.GetChild(5);
+                                        quantityCheckout = quantityCheckout.transform.GetChild(0);
+                                        TextMeshProUGUI quantityTextCheckout = quantityCheckout.GetComponent<TextMeshProUGUI>();
+                                        quantityTextCheckout.text = product.quantity.ToString();
+
+                                        Transform valueCheckout = checkouItemTemplate.transform.GetChild(4);
+                                        TextMeshProUGUI valueStringCheckout = valueCheckout.GetComponent<TextMeshProUGUI>();
+                                        valueStringCheckout.text = (product.value * product.quantity).ToString("F2");
+                                    }
+                                }
                             }
                         }
+                    
                     }
                 }
             }
@@ -218,7 +285,6 @@ public class CartController : MonoBehaviour
     public void DecreaseQuantityCart()
     {
         Transform clickedButton = EventSystem.current.currentSelectedGameObject.transform;
-
         foreach (ProductSO product in cartList.list)
         {
             foreach (KeyValuePair<int, ProductSO> item in productDictionary)
@@ -228,13 +294,12 @@ public class CartController : MonoBehaviour
                     foreach (GameObject uiTemplate in cartUIList)
                     {
                         Transform decreaseButton = uiTemplate.transform.GetChild(11);
-
                         var tempProductName = uiTemplate.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
                         if (tempProductName.text == product.productName)
                         {
                             if (clickedButton == decreaseButton)
                             {
-                                if(product.quantity > 1)
+                                if (product.quantity > 1)
                                 {
                                     product.quantity--;
                                     product.quantityPlus = product.quantity;
@@ -250,10 +315,26 @@ public class CartController : MonoBehaviour
                                 TextMeshProUGUI valueString = value.GetComponent<TextMeshProUGUI>();
                                 valueString.text = (product.value * product.quantity).ToString("F2");
 
-                                
+                                //checkoutListing
+                                foreach (GameObject checkouItemTemplate in checkoutUIList)
+                                {
+                                    var tempCheckoutProductName = checkouItemTemplate.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+                                    if (tempCheckoutProductName.text == product.productName)
+                                    {
+                                        Transform quantityCheckout = checkouItemTemplate.transform.GetChild(5);
+                                        quantityCheckout = quantityCheckout.transform.GetChild(0);
+                                        TextMeshProUGUI quantityTextCheckout = quantityCheckout.GetComponent<TextMeshProUGUI>();
+                                        quantityTextCheckout.text = product.quantity.ToString();
+
+                                        Transform valueCheckout = checkouItemTemplate.transform.GetChild(4);
+                                        TextMeshProUGUI valueStringCheckout = valueCheckout.GetComponent<TextMeshProUGUI>();
+                                        valueStringCheckout.text = (product.value * product.quantity).ToString("F2");
+                                    }
+                                }
                             }
                         }
                     }
+
                 }
             }
         }
@@ -266,6 +347,7 @@ public class CartController : MonoBehaviour
         var tempKey = 0;
         var tempUIList = gameObject;
         var tempProduct = productSO;
+        var tempCheckoutUI = gameObject;
 
         var clickedButton = EventSystem.current.currentSelectedGameObject.transform;
         foreach (ProductSO product in cartList.list)
@@ -289,12 +371,26 @@ public class CartController : MonoBehaviour
                                     tempUIList = uiTemplate;
                                     tempKey = item.Key;
                                     tempProduct = product;
-
+                                    //add to remove from checkout
                                     isRemoved = true;
 
                                     itemValueToRemove = product.value * product.quantity;
 
                                     CheckoutController.Instance.UpdateValue();
+
+                                    //checkoutListing
+                                    foreach (GameObject checkouItemTemplate in checkoutUIList)
+                                    {
+                                        var tempCheckoutProductName = checkouItemTemplate.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+                                        if (tempCheckoutProductName.text == product.productName)
+                                        {
+                                            if (checkouItemTemplate)
+                                            {
+                                                tempCheckoutUI = checkouItemTemplate;
+                                                Destroy(checkouItemTemplate);
+                                            }
+                                        }
+                                    }
 
                                     Destroy(itemCart);
                                     isRemoved = false;
@@ -305,6 +401,7 @@ public class CartController : MonoBehaviour
                 }
             } 
         }
+        checkoutUIList.Remove(tempCheckoutUI);
         cartList.list.Remove(tempProduct);
         cartUIList.Remove(tempUIList);
         productDictionary.Remove(tempKey);
@@ -323,6 +420,11 @@ public class CartController : MonoBehaviour
     public int GetCartListAmmount()
     {
         return cartList.list.Count;
+    }
+
+    public bool GetCartStatus()
+    {
+        return isCartOpen;
     }
 
 }
