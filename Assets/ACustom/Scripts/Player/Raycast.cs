@@ -82,6 +82,8 @@ public class Raycast : MonoBehaviour
         if (Physics.Raycast(mainCamera.transform.position, mainCamera.transform.forward, out hit, raycastRange))
         {
             rayBool = true;
+
+
             if (!hit.collider.gameObject.CompareTag("Player"))
             {
              

@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b43750c4c7c4024c95403b56a5a5739, type: 3}
-  m_Name: Arroz Branco Tipo 1 - Uncle John
+  m_Name: caldo de galinha - gosto bom
   m_EditorClassIdentifier: 
-  productName: Arroz Branco Tipo 1
-  brand: Uncle John
-  value: 15.2
-  weigth: 1 KG
-  manufactureDate: 30/02/2021
-  expirationDate: 30/03/2023
-  ingredients: Arroz
-  allergies: "N\xC3O CONT\xC9M GL\xDATEN"
-  stock: 5
+  productName: Caldo de Galinha
+  brand: Gosto Bom
+  value: 6.5
+  weigth: 500 G
+  manufactureDate: 05/01/2022
+  expirationDate: 09/09/2024
+  ingredients: Conservantes, aromas de galinha, MSG
+  allergies: Nao contem
+  stock: 10
   model3D: {fileID: 0}
-  renderTexture: {fileID: 8400000, guid: 854bbf66c11fb2644b7b2d2c583cd9d3, type: 2}
-  quantity: 2
-  quantityPlus: 5
+  renderTexture: {fileID: 8400000, guid: 6de740e579c250540baef7071d10e961, type: 2}
+  quantity: 0
+  quantityPlus: 0

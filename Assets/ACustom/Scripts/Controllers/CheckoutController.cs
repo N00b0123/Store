@@ -11,6 +11,8 @@ public class CheckoutController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI totalValueCheckout;
     private float valueProduct;
     private CartListSO cartList;
+    private PDPListSO pdpList;
+    private DeliveryListSO deliveryList;
     private List<float> tempListValue;
     private int totalItens = 0;
     private float walletMoney = 500.00f;
@@ -19,7 +21,7 @@ public class CheckoutController : MonoBehaviour
 
     private bool isPDPOpen;
     private bool isCartOpen;
-    private bool isCheckoutOpen;
+    private bool isCheckoutOpen = false;
 
     private void Start()
     {
@@ -28,6 +30,8 @@ public class CheckoutController : MonoBehaviour
         valueProduct = 0f;
 
         cartList = Resources.Load<CartListSO>(typeof(CartListSO).Name);
+        pdpList = Resources.Load<PDPListSO>(typeof(PDPListSO).Name);
+        deliveryList = Resources.Load<DeliveryListSO>(typeof(DeliveryListSO).Name);
 
         checkoutUI = GameObject.Find("CheckoutUI");
         checkoutUI.SetActive(false);
@@ -36,15 +40,20 @@ public class CheckoutController : MonoBehaviour
 
         ShowOrHideValue();
 
+        //only for not need to remove manually in test
+        deliveryList.list.Clear();
+
     }
 
     private void Update()
     {
         //refactor in future
-        isPDPOpen = PDPController.Instance.GetPDPStatus();
-        isCartOpen = CartController.Instance.GetCartStatus();
+    }
 
-        if (Input.GetKeyDown(KeyCode.P) && !isPDPOpen && !isCartOpen)
+    public void ShowCheckout()
+    {
+        CheckIfCheckoutCanBeOpen();
+        if (!isPDPOpen && !isCartOpen)
         {
             if (!isCheckoutOpen)
             {
@@ -53,17 +62,30 @@ public class CheckoutController : MonoBehaviour
                 Cursor.lockState = CursorLockMode.None;
                 isCheckoutOpen = true;
             }
-            else
+        }
+    }
+
+
+    public void HideCheckout()
+    {
+        CheckIfCheckoutCanBeOpen();
+        if (!isPDPOpen && !isCartOpen)
+        {
+            if (isCheckoutOpen)
             {
                 checkoutUI.SetActive(false);
                 Time.timeScale = 1f;
                 Cursor.lockState = CursorLockMode.Locked;
                 isCheckoutOpen = false;
             }
-
         }
     }
 
+    private void CheckIfCheckoutCanBeOpen()
+    {
+        isPDPOpen = PDPController.Instance.GetPDPStatus();
+        isCartOpen = CartController.Instance.GetCartStatus();
+    }
     private void ShowOrHideValue()
     {
         if (totalValue.text == "0,00")
@@ -110,6 +132,8 @@ public class CheckoutController : MonoBehaviour
         totalValue.text = valueProduct.ToString("F2");
         totalValueCheckout.text = valueProduct.ToString("F2");
 
+
+
         bool isRemoved = CartController.Instance.GetRemovedStatus();
 
         if (isRemoved)
@@ -125,4 +149,38 @@ public class CheckoutController : MonoBehaviour
 
         ShowOrHideValue();
     }
+
+    public void FinishBuy()
+    {
+        float totalBuy = float.Parse(totalValueCheckout.text);
+
+        foreach(ProductSO item in cartList.list)
+        {
+            deliveryList.list.Add(item);
+            item.stock -= item.quantity;
+        }
+
+        walletMoney -= totalBuy;
+        walletTotalText.text = walletMoney.ToString("F2");
+        totalValue.text = "0,00";
+        totalValueCheckout.text = valueProduct.ToString("F2");
+
+        CartController.Instance.ClearCheckoutUI();
+        CartController.Instance.ClearCartUI();
+        CartController.Instance.ClearDictionary();
+
+        //see better approach
+        cartList.list.Clear();
+        pdpList.list.Clear();
+
+        HideCheckout();
+
+        ShowOrHideValue();
+        
+
+    }
+
+
+
+
 }

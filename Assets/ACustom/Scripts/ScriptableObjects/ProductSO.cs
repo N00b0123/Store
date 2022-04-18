@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "ScriptableObject/Product")]
 public class ProductSO : ScriptableObject
 {
-    public int id;
+  //  public int id;
     public string productName;
     public string brand;
     public float value;

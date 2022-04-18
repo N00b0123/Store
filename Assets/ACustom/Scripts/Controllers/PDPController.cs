@@ -44,14 +44,43 @@ public class PDPController : MonoBehaviour
         {
             if (!pdpList.list.Contains(e.productSO))
             {
-                e.productSO.quantity = quantity;
-                pdpList.list.Add(e.productSO);
-                CartController.Instance.CreateProductOnCart(pdpList);
+                //just for clean quantity on initialization
+                //maybe create a bug need analise
+                e.productSO.quantity = 0;
+                e.productSO.quantityPlus = 0;
+
+                if (quantity <= e.productSO.stock)
+                {
+                    e.productSO.quantity = quantity;
+                    pdpList.list.Add(e.productSO);
+                    CartController.Instance.CreateProductOnCart(pdpList);
+                }
+                else
+                {
+                    int avaliableQuantity = e.productSO.stock - e.productSO.quantity;
+                    if (avaliableQuantity < 0)
+                    {
+                        avaliableQuantity = 0;
+                    }
+                    Debug.Log($"addcart produto {e.productSO.productName} atingiu sua quantidade maxima disponivel {avaliableQuantity} ");
+                }
             }
             else
             {
-                e.productSO.quantityPlus = quantity;
-                CartController.Instance.UpdateCart(e.productSO);
+                if (e.productSO.quantity + quantity <= e.productSO.stock)
+                {
+                    e.productSO.quantityPlus = quantity;
+                    CartController.Instance.UpdateCart(e.productSO);
+                }
+                else
+                {
+                    int avaliableQuantity = e.productSO.stock - e.productSO.quantity;
+                    if (avaliableQuantity < 0)
+                    {
+                        avaliableQuantity = 0;
+                    }
+                    Debug.Log($"updateQuantity produto {e.productSO.productName} atingiu sua quantidade maxima disponivel {avaliableQuantity}");
+                }
             }
             isEnableAddToCart = false;
         }
