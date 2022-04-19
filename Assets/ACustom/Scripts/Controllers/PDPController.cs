@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System;
+using UnityEngine.UI;
 
 public class PDPController : MonoBehaviour
 {
@@ -15,6 +16,12 @@ public class PDPController : MonoBehaviour
     private PDPListSO pdpList;
     private bool isEnableAddToCart;
     private bool isPDPOpen;
+
+    //notifier
+    private GameObject notifierUI;
+    private Image notifierUIImage;
+    private GameObject notifier;
+    [SerializeField] private TextMeshProUGUI notifierText;
 
     private void Start()
     {
@@ -36,6 +43,12 @@ public class PDPController : MonoBehaviour
         UIButtons.SetActive(false);
         UIDetailsNextPage = GameObject.Find("nextPage");
         UIDetailsNextPage.SetActive(false);
+
+        //notifier
+        notifier = GameObject.Find("Notifier");
+        notifierUI = GameObject.Find("NotifierBackgroundPDP");
+        notifierUIImage = notifierUI.GetComponent<Image>();
+        notifierUI.SetActive(false);
     }
 
     private void Raycast_OnObjectChangeRayPDP(object sender, Raycast.OnObjectChangeRayPDPArgs e)
@@ -54,6 +67,14 @@ public class PDPController : MonoBehaviour
                     e.productSO.quantity = quantity;
                     pdpList.list.Add(e.productSO);
                     CartController.Instance.CreateProductOnCart(pdpList);
+
+                    //refactor to notifier
+                    notifierText.text = ($"O item {e.productSO.productName} foi adicionado ao carrinho com quantidade {quantity}.");
+                    notifierUIImage.color = Color.grey;
+                    notifierText.color = Color.green;
+                    GameObject notifierGO = Instantiate(notifierUI, notifier.transform);
+                    notifierGO.SetActive(true);
+                    Destroy(notifierGO, 3f);
                 }
                 else
                 {
@@ -62,7 +83,15 @@ public class PDPController : MonoBehaviour
                     {
                         avaliableQuantity = 0;
                     }
-                    Debug.Log($"addcart produto {e.productSO.productName} atingiu sua quantidade maxima disponivel {avaliableQuantity} ");
+
+                    //refactor to notifier
+                    notifierText.text = ($"O item não possui estoque suficiente para ser adicionado ao carrinho. Estoque Disponivel: {avaliableQuantity}.     Por favor Tente Novamente!");
+                    notifierUIImage.color = Color.white;
+                    notifierText.color = Color.red;
+                    GameObject notifierGO = Instantiate(notifierUI, notifier.transform);
+                    notifierGO.SetActive(true);
+                    Destroy(notifierGO, 3f);
+
                 }
             }
             else
@@ -71,6 +100,14 @@ public class PDPController : MonoBehaviour
                 {
                     e.productSO.quantityPlus = quantity;
                     CartController.Instance.UpdateCart(e.productSO);
+
+                    //refactor to notifier
+                    notifierText.text = ($"A quantidade do item {e.productSO.productName} foi acrescida em {quantity} unidades.");
+                    notifierUIImage.color = Color.grey;
+                    notifierText.color = Color.green;
+                    GameObject notifierGO = Instantiate(notifierUI, notifier.transform);
+                    notifierGO.SetActive(true);
+                    Destroy(notifierGO, 3f);
                 }
                 else
                 {
@@ -79,7 +116,14 @@ public class PDPController : MonoBehaviour
                     {
                         avaliableQuantity = 0;
                     }
-                    Debug.Log($"updateQuantity produto {e.productSO.productName} atingiu sua quantidade maxima disponivel {avaliableQuantity}");
+
+                    //refactor to notifier
+                    notifierText.text = ($"O item não possui estoque suficiente para ser adicionado ao carrinho. Estoque Disponivel: {avaliableQuantity}.     Por favor Tente Novamente!");
+                    notifierUIImage.color = Color.white;
+                    notifierText.color = Color.red;
+                    GameObject notifierGO = Instantiate(notifierUI, notifier.transform);
+                    notifierGO.SetActive(true);
+                    Destroy(notifierGO, 3f);
                 }
             }
             isEnableAddToCart = false;
@@ -96,7 +140,7 @@ public class PDPController : MonoBehaviour
         UIDetails.SetActive(true);
         UIButtons.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
-        Time.timeScale = 0f;
+      //  Time.timeScale = 0f;
         isPDPOpen = true;
     }
 
@@ -108,7 +152,7 @@ public class PDPController : MonoBehaviour
         UIDetailsNextPage.SetActive(false);
         UIButtons.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
-        Time.timeScale = 1f;
+     //   Time.timeScale = 1f;
         isPDPOpen = false;
     }
 

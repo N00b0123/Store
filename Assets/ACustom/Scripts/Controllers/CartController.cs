@@ -37,6 +37,12 @@ public class CartController : MonoBehaviour
     private bool isCheckoutOpen;
     private float itemValueToRemove;
 
+    //notifier
+    private GameObject notifierUI;
+    private Image notifierUIImage;
+    private GameObject notifier;
+    [SerializeField] private TextMeshProUGUI notifierText;
+
     //checkout list
     private List<GameObject> checkoutUIList = new List<GameObject>();
     private GameObject checkoutItemTemplate;
@@ -71,6 +77,12 @@ public class CartController : MonoBehaviour
         checkoutItemTemplate = GameObject.Find("CheckoutItem");
         checkoutItemTemplate.SetActive(false);
         checkoutScrollUI = GameObject.Find("PanelCheckout");
+
+        //notifier
+        notifier = GameObject.Find("Notifier");
+        notifierUI = GameObject.Find("NotifierBackgroundCart");
+        notifierUIImage = notifierUI.GetComponent<Image>();
+        notifierUI.SetActive(false);
     }
 
     private void Update()
@@ -84,14 +96,14 @@ public class CartController : MonoBehaviour
             if (!isCartOpen)
             {
                 cartUI.SetActive(true);
-                Time.timeScale = 0f;
+              //  Time.timeScale = 0f;
                 Cursor.lockState = CursorLockMode.None;
                 isCartOpen = true;
             }
             else
             {
                 cartUI.SetActive(false);
-                Time.timeScale = 1f;
+              //  Time.timeScale = 1f;
                 Cursor.lockState = CursorLockMode.Locked;
                 isCartOpen = false;
             }
@@ -227,7 +239,6 @@ public class CartController : MonoBehaviour
 
     public void IncreaseQuantityCart()
     {
-        //TODO verify stock to increase
         Transform clickedButton = EventSystem.current.currentSelectedGameObject.transform;
         foreach (ProductSO product in cartList.list)
         {
@@ -283,23 +294,27 @@ public class CartController : MonoBehaviour
                                         //just for compensate
                                         product.quantity--;
 
-                                        int avaliableQuantity = product.stock - product.quantity;
-                                        if (avaliableQuantity < 0)
-                                        {
-                                            avaliableQuantity = 0;
-                                        }
-                                        Debug.Log($"IncrementCartInside produto {product.productName} atingiu sua quantidade maxima disponivel {avaliableQuantity}");
+                                        //refactor to notifier
+                                        notifierText.text = ($"Quantidade limite do item {product.productName} atingida!");
+                                        notifierUIImage.color = Color.white;
+                                        notifierText.color = Color.red;
+                                        GameObject notifierGO = Instantiate(notifierUI, notifier.transform);
+                                        notifierGO.SetActive(true);
+                                        Destroy(notifierGO, 3f);
+
                                     }
 
                                 }
                                 else
                                 {
-                                    int avaliableQuantity = product.stock - product.quantity;
-                                    if(avaliableQuantity < 0)
-                                    {
-                                        avaliableQuantity = 0;
-                                    }
-                                    Debug.Log($"IncrementCartOutside produto {product.productName} atingiu sua quantidade maxima disponivel {avaliableQuantity}");
+
+                                    //refactor to notifier
+                                    notifierText.text = ($"Quantidade limite do item {product.productName} atingida!");
+                                    notifierUIImage.color = Color.white;
+                                    notifierText.color = Color.red;
+                                    GameObject notifierGO = Instantiate(notifierUI, notifier.transform);
+                                    notifierGO.SetActive(true);
+                                    Destroy(notifierGO, 3f);
                                 }
 
                             }
@@ -328,13 +343,11 @@ public class CartController : MonoBehaviour
                         {
                             if (clickedButton == decreaseButton)
                             {
-                              //  Debug.Log("caiu aqui fora");
                                 if (product.quantity > 1)
                                 {
                                     
                                     product.quantity--;
                                     product.quantityPlus = product.quantity;
-                                    Debug.Log($"quantidade {product.quantity} quantidade plus {product.quantityPlus}");
                                     CheckoutController.Instance.UpdateValue();
                                 }
                                 Transform quantity = uiTemplate.transform.GetChild(7);
@@ -438,6 +451,14 @@ public class CartController : MonoBehaviour
         cartList.list.Remove(tempProduct);
         cartUIList.Remove(tempUIList);
         productDictionary.Remove(tempKey);
+
+        //refactor to notifier
+        notifierText.text = ($"O item {tempProduct.productName} foi removido do carrinho com sucesso!");
+        notifierUIImage.color = Color.white;
+        notifierText.color = Color.red;
+        GameObject notifierGO = Instantiate(notifierUI, notifier.transform);
+        notifierGO.SetActive(true);
+        Destroy(notifierGO, 3f);
     }
 
     public void ClearCartUI()

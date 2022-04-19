@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b43750c4c7c4024c95403b56a5a5739, type: 3}
   m_Name: Caixa de BomBom - BomBom
   m_EditorClassIdentifier: 
-  id: 4
   productName: Caixa de BomBom
   brand: BomBom
   value: 9.99
@@ -24,3 +23,5 @@ MonoBehaviour:
   stock: 20
   model3D: {fileID: 0}
   renderTexture: {fileID: 8400000, guid: dfe31aec7ff43bb45954972ab2879fca, type: 2}
+  quantity: 0
+  quantityPlus: 0

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class CheckoutController : MonoBehaviour
 {
@@ -23,6 +24,12 @@ public class CheckoutController : MonoBehaviour
     private bool isCartOpen;
     private bool isCheckoutOpen = false;
 
+    //notifier
+    private GameObject notifierUI;
+    private Image notifierUIImage;
+    private GameObject notifier;
+    [SerializeField] private TextMeshProUGUI notifierText;
+
     private void Start()
     {
         Instance = this;
@@ -43,6 +50,12 @@ public class CheckoutController : MonoBehaviour
         //only for not need to remove manually in test
         deliveryList.list.Clear();
 
+        //notifier
+        notifier = GameObject.Find("Notifier");
+        notifierUI = GameObject.Find("NotifierBackgroundCheckout");
+        notifierUIImage = notifierUI.GetComponent<Image>();
+        notifierUI.SetActive(false);
+
     }
 
     private void Update()
@@ -58,7 +71,7 @@ public class CheckoutController : MonoBehaviour
             if (!isCheckoutOpen)
             {
                 checkoutUI.SetActive(true);
-                Time.timeScale = 0f;
+              //  Time.timeScale = 0f;
                 Cursor.lockState = CursorLockMode.None;
                 isCheckoutOpen = true;
             }
@@ -74,7 +87,7 @@ public class CheckoutController : MonoBehaviour
             if (isCheckoutOpen)
             {
                 checkoutUI.SetActive(false);
-                Time.timeScale = 1f;
+             //   Time.timeScale = 1f;
                 Cursor.lockState = CursorLockMode.Locked;
                 isCheckoutOpen = false;
             }
@@ -152,35 +165,52 @@ public class CheckoutController : MonoBehaviour
 
     public void FinishBuy()
     {
-        float totalBuy = float.Parse(totalValueCheckout.text);
-
-        foreach(ProductSO item in cartList.list)
+        if (cartList.list.Count == 0)
         {
-            deliveryList.list.Add(item);
-            item.stock -= item.quantity;
+            notifierText.text = ($"Carrinho Vazio! Nenhuma compra foi realizada");
+            notifierUIImage.color = Color.white;
+            notifierText.color = Color.red;
+            GameObject notifierGOEmpty = Instantiate(notifierUI, notifier.transform);
+            notifierGOEmpty.SetActive(true);
+            Destroy(notifierGOEmpty, 3f);
+
+            HideCheckout();
         }
+        else
+        {
+            float totalBuy = float.Parse(totalValueCheckout.text);
 
-        walletMoney -= totalBuy;
-        walletTotalText.text = walletMoney.ToString("F2");
-        totalValue.text = "0,00";
-        totalValueCheckout.text = valueProduct.ToString("F2");
+            foreach (ProductSO item in cartList.list)
+            {
+                deliveryList.list.Add(item);
+                item.stock -= item.quantity;
+            }
 
-        CartController.Instance.ClearCheckoutUI();
-        CartController.Instance.ClearCartUI();
-        CartController.Instance.ClearDictionary();
+            walletMoney -= totalBuy;
+            walletTotalText.text = walletMoney.ToString("F2");
+            totalValue.text = "0,00";
+            totalValueCheckout.text = valueProduct.ToString("F2");
 
-        //see better approach
-        cartList.list.Clear();
-        pdpList.list.Clear();
+            CartController.Instance.ClearCheckoutUI();
+            CartController.Instance.ClearCartUI();
+            CartController.Instance.ClearDictionary();
 
-        HideCheckout();
+            //see better approach
+            cartList.list.Clear();
+            pdpList.list.Clear();
 
-        ShowOrHideValue();
-        
+            HideCheckout();
 
+            ShowOrHideValue();
+
+
+            //refactor to notifier
+            notifierText.text = ($"Compra Finalizada com sucesso, seus items foram adicionados a entrega! Obrigado pela Compra!");
+            notifierUIImage.color = Color.grey;
+            notifierText.color = Color.green;
+            GameObject notifierGO = Instantiate(notifierUI, notifier.transform);
+            notifierGO.SetActive(true);
+            Destroy(notifierGO, 3f);
+        }
     }
-
-
-
-
 }

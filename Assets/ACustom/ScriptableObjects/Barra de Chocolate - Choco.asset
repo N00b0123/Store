@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b43750c4c7c4024c95403b56a5a5739, type: 3}
   m_Name: Barra de Chocolate - Choco
   m_EditorClassIdentifier: 
-  id: 5
   productName: Barra de chocolate
   brand: Choco
   value: 4.25
@@ -24,6 +23,8 @@ MonoBehaviour:
     e aromatizante."
   allergies: "Pode Conter Tra\xE7os De Soja, Amendoim, Castanha De Caju, Trigo E
     Cevada. Cont\xE9m Gl\xFAten. Cont\xE9m Lactose."
-  stock: 20
+  stock: 10
   model3D: {fileID: 0}
   renderTexture: {fileID: 8400000, guid: 7d5c65fa7005d28408a1eac21eb4a377, type: 2}
+  quantity: 10
+  quantityPlus: 10

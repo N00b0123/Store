@@ -24,6 +24,11 @@ public class PlayerMovement : MonoBehaviour
     bool isGrounded;
     int numberOfJumps = 0;
 
+    //refactor to state machine
+    private bool isCartOpen;
+    private bool isPDPOpen;
+    private bool isCheckoutOpen;
+
     // Update is called once per frame
     void Update()
     {
@@ -39,14 +44,23 @@ public class PlayerMovement : MonoBehaviour
 
     void PlayerMove()
     {
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
 
-        Vector3 move = transform.right * x + transform.forward * z;
+        //maybe bad pratice, refactor in future
+        isPDPOpen = PDPController.Instance.GetPDPStatus();
+        isCheckoutOpen = CheckoutController.Instance.GetCheckoutStatus();
+        isCartOpen = CartController.Instance.GetCartStatus();
 
-        controller.Move(move * speed * Time.deltaTime);
-        velocity.y += gravity * Time.deltaTime;
-        controller.Move(velocity * Time.deltaTime);
+        if (!isCartOpen && !isPDPOpen && !isCheckoutOpen)
+        {
+            float x = Input.GetAxis("Horizontal");
+            float z = Input.GetAxis("Vertical");
+
+            Vector3 move = transform.right * x + transform.forward * z;
+
+            controller.Move(move * speed * Time.deltaTime);
+            velocity.y += gravity * Time.deltaTime;
+            controller.Move(velocity * Time.deltaTime);
+        }
     }
 
     void IsGroundedCheck()

@@ -8,8 +8,12 @@ public class MouseLook : MonoBehaviour
 
     public float mouseSensitivity = 100f;
     public Transform playerBody;
-  //  public TextMeshProUGUI fpsString;
-  //  float deltaTime;
+
+    private bool isPDPOpen;
+    private bool isCheckoutOpen;
+    private bool isCartOpen;
+    public TextMeshProUGUI fpsString;
+    float deltaTime;
 
 
     float xRotation = 0f;
@@ -17,25 +21,34 @@ public class MouseLook : MonoBehaviour
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
-       // Application.targetFrameRate = 60;
+        Application.targetFrameRate = 60;
     }
 
     // Update is called once per frame
     void Update()
     {
-      //  deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
-       // float fps = 1.0f / deltaTime;
-      //  fpsString.text = Mathf.Ceil(fps).ToString();
+          deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
+         float fps = 1.0f / deltaTime;
+          fpsString.text = Mathf.Ceil(fps).ToString();
 
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
-        xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+        //maybe bad pratice, refactor in future
+        isPDPOpen = PDPController.Instance.GetPDPStatus();
+        isCheckoutOpen = CheckoutController.Instance.GetCheckoutStatus();
+        isCartOpen = CartController.Instance.GetCartStatus();
 
-        transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-        playerBody.Rotate(Vector3.up * mouseX);
+        if (!isCartOpen && !isPDPOpen && !isCheckoutOpen)
+        {
 
+            float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+            float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+
+            xRotation -= mouseY;
+            xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+
+            transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+            playerBody.Rotate(Vector3.up * mouseX);
+        }
     }
 
 }

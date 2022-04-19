@@ -23,5 +23,5 @@ MonoBehaviour:
   stock: 5
   model3D: {fileID: 0}
   renderTexture: {fileID: 8400000, guid: 854bbf66c11fb2644b7b2d2c583cd9d3, type: 2}
-  quantity: 2
-  quantityPlus: 5
+  quantity: 0
+  quantityPlus: 0
