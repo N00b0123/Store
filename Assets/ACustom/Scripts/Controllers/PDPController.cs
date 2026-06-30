@@ -7,9 +7,9 @@ using UnityEngine.UI;
 
 public class PDPController : MonoBehaviour
 {
-    private GameObject UIDetails;
-    private GameObject UIButtons;
-    private GameObject UIDetailsNextPage;
+    [SerializeField] private GameObject UIDetails;
+    [SerializeField] private GameObject UIButtons;
+    [SerializeField] private GameObject UIDetailsNextPage;
     public static PDPController Instance;
     private int quantity;
     [SerializeField] TextMeshProUGUI quantityText;
@@ -37,11 +37,11 @@ public class PDPController : MonoBehaviour
 
         quantity = 1;
         Instance = this;
-        UIDetails = GameObject.Find("details");
+       // UIDetails = GameObject.Find("details");
         UIDetails.SetActive(false);
-        UIButtons = GameObject.Find("Buttons");
+      //  UIButtons = GameObject.Find("Buttons");
         UIButtons.SetActive(false);
-        UIDetailsNextPage = GameObject.Find("nextPage");
+      //  UIDetailsNextPage = GameObject.Find("nextPage");
         UIDetailsNextPage.SetActive(false);
 
         //notifier

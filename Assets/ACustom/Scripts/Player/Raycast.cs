@@ -89,23 +89,30 @@ public class Raycast : MonoBehaviour
              
                 if (lastHitObj != null)
                 {
-                    nowHitObj = hit.collider.transform;
-                    productLink = hit.collider.GetComponent<SOLink>();
-                    productSO = productLink.GetSO();
-
-                    pdpLink = hit.collider.GetComponent<PDPLink>();
-                    productSOPDP = pdpLink.GetSO();
-
-                    ToolTip.Instance.ShowToolTipUI();
-
-                    OnObjectChangeRay?.Invoke(this, new OnObjectChangeRayArgs { productSO = productSO });
-                    OnObjectChangeRayPDP?.Invoke(this, new OnObjectChangeRayPDPArgs { productSO = productSOPDP });
-                    OnObjectSelected?.Invoke(this, new OnObjectSelectedArgs { nowHitObj = nowHitObj });
-
-                    if(nowHitObj != lastHitObj)
+                  //  if (productLink.GetSO() != null) {
+                        nowHitObj = hit.collider.transform;
+                    if(hit.collider.GetComponent<SOLink>() != null)
                     {
-                        OnObjectUnSelected?.Invoke(this, new OnObjectUnSelectedArgs { lastHitObj = lastHitObj });
+                        productLink = hit.collider.GetComponent<SOLink>();
+                        productSO = productLink.GetSO();
+
+                        pdpLink = hit.collider.GetComponent<PDPLink>();
+                        productSOPDP = pdpLink.GetSO();
+
+                        ToolTip.Instance.ShowToolTipUI();
+
+                        OnObjectChangeRay?.Invoke(this, new OnObjectChangeRayArgs { productSO = productSO });
+                        OnObjectChangeRayPDP?.Invoke(this, new OnObjectChangeRayPDPArgs { productSO = productSOPDP });
+                        OnObjectSelected?.Invoke(this, new OnObjectSelectedArgs { nowHitObj = nowHitObj });
+
+                        if (nowHitObj != lastHitObj)
+                        {
+                            OnObjectUnSelected?.Invoke(this, new OnObjectUnSelectedArgs { lastHitObj = lastHitObj });
+                        }
                     }
+
+
+                   // }
 
                 }
                lastHitObj = hit.collider.transform;

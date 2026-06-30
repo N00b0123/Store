@@ -8,13 +8,13 @@ public class ToolTip : MonoBehaviour
 {
     public static ToolTip Instance;
 
-    private GameObject UI;
+    [SerializeField] private GameObject UI;
 
     private void Start()
     {
         Instance = this;
 
-        UI = GameObject.Find("toolTip");
+       // UI = GameObject.Find("toolTip");
         UI.SetActive(false);
     }
 

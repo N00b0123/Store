@@ -20,7 +20,7 @@ MonoBehaviour:
   expirationDate: 09/08/2023
   ingredients: "Cacau, a\xE7ucar, teste"
   allergies: cacau, teste
-  stock: 20
+  stock: 7
   model3D: {fileID: 0}
   renderTexture: {fileID: 8400000, guid: dfe31aec7ff43bb45954972ab2879fca, type: 2}
   quantity: 0

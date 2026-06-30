@@ -20,8 +20,8 @@ MonoBehaviour:
   expirationDate: 09/06/2025
   ingredients: BlueBerry, agua mineral, conservantes
   allergies: Nao contem Alergenicos
-  stock: 50
+  stock: 20
   model3D: {fileID: 0}
   renderTexture: {fileID: 8400000, guid: 776fa2adffa8ede478257ae3aaf2a0dc, type: 2}
-  quantity: 0
-  quantityPlus: 0
+  quantity: 5
+  quantityPlus: 1

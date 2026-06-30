@@ -12,22 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b43750c4c7c4024c95403b56a5a5739, type: 3}
   m_Name: Salame - Plebeu
   m_EditorClassIdentifier: 
-  productName: Salame
-  brand: Plebeu
-  value: 49.99
-  weigth: 1 KG
-  manufactureDate: 05/02/2021
-  expirationDate: 30/12/2022
-  ingredients: "Carne su\xEDna, toucinho su\xEDno, sal, dextrose, especiarias: pimenta-preta,
-    pimenta-vermelha, alecrim e curry, maltodextrina, \xE1gua, a\xE7\xFAcar, real\xE7ador
-    de sabor: glutamato monoss\xF3dico (INS 621), antioxidante: eritorbato de s\xF3dio
-    (INS 316), conservantes: nitrato de s\xF3dio (INS 251) e nitrito de s\xF3dio
-    (INS 250), cultura bacteriana, aromas naturais: pimenta-vermelha e alho e acidulante:
-    \xE1cido c\xEDtrico (INS 330)."
-  allergies: "N\xE3o cont\xE9m gl\xFAten N\xE3o cont\xE9m lactose N\xE3o Cont\xE9m
-    Alerg\xEAnicos: Cont\xE9m aromatizante."
+  productName: "Machado Lend\xE1rio"
+  brand: Skyforge
+  value: 149.99
+  weigth: 15 KG
+  manufactureDate: 05/02/1820
+  expirationDate: NONE
+  ingredients: Damascus Steel, engraved in gold
+  allergies: NONE
   stock: 30
   model3D: {fileID: 0}
   renderTexture: {fileID: 8400000, guid: 758f1f6879bb2fe408d7497bd97371b3, type: 2}
-  quantity: 2
+  quantity: 1
   quantityPlus: 0

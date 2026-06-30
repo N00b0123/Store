@@ -22,8 +22,8 @@ MonoBehaviour:
     citrato de s\xF3dio (INS 331iii), monofosfato monoss\xF3dico (INS 339i) e difosfato
     diss\xF3dico (INS 450i)"
   allergies: "N\xE3o Cont\xE9m Gl\xFAten, cont\xE9m Lactose, cont\xE9m leite."
-  stock: 50
+  stock: 11
   model3D: {fileID: 0}
   renderTexture: {fileID: 8400000, guid: e1cbbaaa54113614f88f092cad098cbc, type: 2}
-  quantity: 0
-  quantityPlus: 0
+  quantity: 1
+  quantityPlus: 1

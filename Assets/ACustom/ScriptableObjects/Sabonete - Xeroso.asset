@@ -20,7 +20,7 @@ MonoBehaviour:
   expirationDate: 09/09/2025
   ingredients: Sabao, fragrancia xerosa, conservante
   allergies: Nao contem alergenicos
-  stock: 40
+  stock: 30
   model3D: {fileID: 0}
   renderTexture: {fileID: 8400000, guid: 5e2b86e9e5f63d042ab67ee08d5beedd, type: 2}
   quantity: 0
